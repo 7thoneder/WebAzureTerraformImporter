@@ -1,0 +1,85 @@
+{
+  "name": "site-creator-vinext-starter",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.16.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "set WRANGLER_LOG_PATH=.wrangler/wrangler.log&& vinext dev",
+    "build": "set WRANGLER_LOG_PATH=.wrangler/wrangler.log&& vinext build",
+    "start": "set WRANGLER_LOG_PATH=.wrangler/wrangler.log&& vinext start",
+    "build:azure": "node scripts/vinext-build.mjs",
+    "start:azure": "node scripts/vinext-start.mjs",
+    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "db:generate": "drizzle-kit generate",
+    "desktop": "electron desktop",
+    "desktop:package": "electron-packager desktop AzureTerraformImportPlanner --platform=win32 --arch=x64 --out=outputs --overwrite --electron-zip-dir=work/electron-cache/85f2b7422cd2141b6caa99bac0fc0658b0f22b533b571f6a2ec9a49f2ac23c0a",
+    "installer": "electron-builder --win nsis --x64",
+    "installer:dir": "electron-builder --win dir --x64",
+    "installer:signed": "electron-builder --win nsis --x64"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@cloudflare/workers-types": "^5.20260804.1",
+    "@electron/packager": "^20.1.1",
+    "electron-builder": "^26.0.12",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.10",
+    "electron": "^43.3.0",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.6",
+    "react-server-dom-webpack": "19.2.6",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "0.0.50",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  },
+  "type": "module",
+  "build": {
+    "appId": "com.azureterraformimportplanner.desktop",
+    "productName": "Azure Terraform Import Planner",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "desktop/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "signAndEditExecutable": true,
+      "publisherName": "7thoneder"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Azure Terraform Import Planner"
+    }
+  }
+}
