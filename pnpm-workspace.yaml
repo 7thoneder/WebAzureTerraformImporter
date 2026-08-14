@@ -1,0 +1,9 @@
+packages:
+  - .
+
+onlyBuiltDependencies:
+  - electron-winstaller
+  - esbuild
+  - sharp
+  - unrs-resolver
+  - workerd

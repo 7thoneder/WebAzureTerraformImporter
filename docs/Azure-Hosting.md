@@ -14,6 +14,7 @@ Because the app includes a server API route for loading Terraform state from Azu
 
 - `Dockerfile` - Builds and runs the Vinext web app in a Linux container.
 - `.dockerignore` - Excludes local build artifacts from the container context.
+- `pnpm-workspace.yaml` - Approves required native dependency build scripts for non-interactive Docker installs.
 - `scripts/vinext-build.mjs` - Cross-platform production build wrapper.
 - `scripts/vinext-start.mjs` - Cross-platform production start wrapper.
 - `azure/app-service-container.bicep` - App Service container infrastructure template.

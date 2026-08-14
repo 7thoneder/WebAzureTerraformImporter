@@ -154,6 +154,7 @@ scripts/
 
 package.json      Root scripts and dependencies
 pnpm-lock.yaml    Dependency lockfile
+pnpm-workspace.yaml pnpm workspace and approved native build dependencies
 Dockerfile        Azure-ready web container build
 .dockerignore     Docker build ignore rules
 .gitignore        Ignored local/build artifacts
