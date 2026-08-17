@@ -2,11 +2,11 @@ packages:
   - .
 
 allowBuilds:
-  electron-winstaller: set this to true or false
-  esbuild: set this to true or false
-  sharp: set this to true or false
-  unrs-resolver: set this to true or false
-  workerd: set this to true or false
+  electron-winstaller: true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
 
 onlyBuiltDependencies:
   - electron-winstaller
