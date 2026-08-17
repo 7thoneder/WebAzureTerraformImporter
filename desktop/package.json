@@ -1,0 +1,7 @@
+{
+  "name": "azure-terraform-import-planner-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main.cjs",
+  "description": "Desktop app for finding Azure resources missing from Terraform state and generating import blocks."
+}

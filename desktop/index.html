@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azure Terraform Import Planner</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <section>
+          <p class="eyebrow">Azure Terraform Import Planner</p>
+          <h1>Desktop import planning for Azure and Terraform.</h1>
+          <p class="lede">
+            Sign in with Azure, pick a subscription, scan Resource Graph, compare with Terraform
+            state, and save import blocks locally.
+          </p>
+        </section>
+        <section class="panel">
+          <h2>Azure Connection</h2>
+          <label for="clientId">App registration client ID</label>
+          <input id="clientId" class="mono" placeholder="Application (client) ID" />
+          <label for="tenantId">Tenant</label>
+          <input id="tenantId" class="mono" value="organizations" />
+          <p class="hint">
+            Enable public client flows on the Azure app registration. No redirect URI or client
+            secret is required for desktop sign-in.
+          </p>
+          <div class="actions">
+            <button id="loginButton">Sign in to Azure</button>
+            <button id="refreshButton" class="secondary" disabled>Refresh subscriptions</button>
+          </div>
+          <div id="deviceCodePanel" class="device-code-panel" hidden>
+            <span>Azure sign-in code</span>
+            <strong id="deviceCodeValue"></strong>
+            <p id="deviceCodeMessage"></p>
+          </div>
+          <select id="subscriptionSelect" disabled>
+            <option value="">Choose a subscription</option>
+          </select>
+          <p id="authMessage" class="message"></p>
+        </section>
+      </header>
+
+      <section class="metrics">
+        <article><span>Azure resources</span><strong id="azureCount">0</strong></article>
+        <article><span>Already in state</span><strong id="stateCount">0</strong></article>
+        <article class="accent"><span>Import candidates</span><strong id="candidateCount">0</strong></article>
+      </section>
+
+      <section class="grid two">
+        <section class="panel">
+          <h2>Azure Resource Graph</h2>
+          <p class="hint">Load this from Azure or paste Resource Graph JSON manually.</p>
+          <pre id="azCommand"></pre>
+          <button id="queryButton" disabled>Query selected subscription</button>
+          <textarea id="azureInput" spellcheck="false"></textarea>
+        </section>
+
+        <section class="panel">
+          <h2>Terraform State</h2>
+          <p class="hint">Paste output from <span class="mono">terraform state pull</span>.</p>
+          <pre>terraform state pull</pre>
+          <div class="storage-loader">
+            <h3>Load state from Azure Storage</h3>
+            <label for="storageAccountInput">Storage account</label>
+            <input id="storageAccountInput" class="mono" placeholder="sttfstateprod" />
+            <label for="stateContainerInput">Container</label>
+            <input id="stateContainerInput" class="mono" placeholder="tfstate" />
+            <label for="stateBlobInput">State blob/key</label>
+            <input id="stateBlobInput" class="mono" placeholder="network/prod.tfstate" />
+            <button id="loadStateButton" class="secondary" disabled>Load state from Azure Storage</button>
+            <p id="stateStorageMessage" class="message"></p>
+          </div>
+          <textarea id="stateInput" spellcheck="false"></textarea>
+        </section>
+      </section>
+
+      <section class="grid results">
+        <section class="panel">
+          <h2>Unmanaged Resources</h2>
+          <div class="toolbar">
+            <input id="filterInput" placeholder="Filter by name, type, or resource group" />
+            <button id="sampleButton" class="secondary">Load sample</button>
+          </div>
+          <p id="parseError" class="error"></p>
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Resource</th>
+                  <th>Terraform target</th>
+                  <th>Match</th>
+                </tr>
+              </thead>
+              <tbody id="resourcesTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Generated Import Blocks</h2>
+          <p class="hint">Review medium and manual matches before applying.</p>
+          <textarea id="importsOutput" readonly spellcheck="false"></textarea>
+          <div class="actions">
+            <button id="copyButton">Copy import blocks</button>
+            <button id="saveButton" class="secondary">Save imports.tf</button>
+          </div>
+          <p id="copyMessage" class="message"></p>
+          <p id="saveMessage" class="message"></p>
+        </section>
+      </section>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
